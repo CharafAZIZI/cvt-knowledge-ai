@@ -1,0 +1,416 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\data\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\data\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\services\\implementations\\authserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\services\\implementations\\authserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\repositories\\implementations\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\repositories\\implementations\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\changepasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\changepasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\data\\authdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\data\\authdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\dtos\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\dtos\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|c:\\users\\azizi\\desktop\\cvt knowledge ai\\authservice\\authservice\\authservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DBE86427-A6A9-4061-9F99-5D8F6CB5DD5E}|AuthService\\AuthService.csproj|solutionrelative:authservice\\authservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Data\\Class.cs",
+              "RelativeDocumentMoniker": "AuthService\\Data\\Class.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Data\\Class.cs",
+              "RelativeToolTip": "AuthService\\Data\\Class.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T18:55:01.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "AuthService\\Services\\Interfaces\\IUserService.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Interfaces\\IUserService.cs",
+              "RelativeToolTip": "AuthService\\Services\\Interfaces\\IUserService.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAywB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:58:01.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthServiceImpl.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Implementations\\AuthServiceImpl.cs",
+              "RelativeDocumentMoniker": "AuthService\\Services\\Implementations\\AuthServiceImpl.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Implementations\\AuthServiceImpl.cs",
+              "RelativeToolTip": "AuthService\\Services\\Implementations\\AuthServiceImpl.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwDIAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T12:03:23.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Implementations\\UserService.cs",
+              "RelativeDocumentMoniker": "AuthService\\Services\\Implementations\\UserService.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Implementations\\UserService.cs",
+              "RelativeToolTip": "AuthService\\Services\\Implementations\\UserService.cs",
+              "ViewState": "AgIAACEBAAAAAAAAAAAWwC0BAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:58:17.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AuthService\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AuthService\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAgwFAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T10:59:16.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "AuthService\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "AuthService\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAABQBAAAAAAAAAAAuwBgBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:57:33.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Program.cs",
+              "RelativeDocumentMoniker": "AuthService\\Program.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Program.cs",
+              "RelativeToolTip": "AuthService\\Program.cs",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAQwNIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T12:15:53.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\appsettings.json",
+              "RelativeDocumentMoniker": "AuthService\\appsettings.json",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\appsettings.json",
+              "RelativeToolTip": "AuthService\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-13T12:23:08.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "AuthService\\Services\\Interfaces\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "AuthService\\Services\\Interfaces\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T11:57:01.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Repositories\\Implementations\\UserRepository.cs",
+              "RelativeDocumentMoniker": "AuthService\\Repositories\\Implementations\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Repositories\\Implementations\\UserRepository.cs",
+              "RelativeToolTip": "AuthService\\Repositories\\Implementations\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T16:19:09.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Repositories\\Interfaces\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "AuthService\\Repositories\\Interfaces\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Repositories\\Interfaces\\IUserRepository.cs",
+              "RelativeToolTip": "AuthService\\Repositories\\Interfaces\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T16:18:55.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ResetPasswordRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\ResetPasswordRequest.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\ResetPasswordRequest.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\ResetPasswordRequest.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\ResetPasswordRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T16:01:48.488Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ChangePasswordRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\ChangePasswordRequest.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\ChangePasswordRequest.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\ChangePasswordRequest.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\ChangePasswordRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:53:39.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UpdateUserRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UpdateUserRequest.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\UpdateUserRequest.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UpdateUserRequest.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\UpdateUserRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:53:27.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CreateUserRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\CreateUserRequest.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\CreateUserRequest.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\CreateUserRequest.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\CreateUserRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:53:14.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UserResponse.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\UserResponse.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UserResponse.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\UserResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T11:36:10.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LoginResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\LoginResponse.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\LoginResponse.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\LoginResponse.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\LoginResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T11:36:56.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\LoginRequest.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T11:35:05.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AuthDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Data\\AuthDbContext.cs",
+              "RelativeDocumentMoniker": "AuthService\\Data\\AuthDbContext.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Data\\AuthDbContext.cs",
+              "RelativeToolTip": "AuthService\\Data\\AuthDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T10:56:37.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "AuthService\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\Entities\\User.cs",
+              "RelativeToolTip": "AuthService\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T11:33:37.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UserListResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UserListResponse.cs",
+              "RelativeDocumentMoniker": "AuthService\\DTOs\\UserListResponse.cs",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\DTOs\\UserListResponse.cs",
+              "RelativeToolTip": "AuthService\\DTOs\\UserListResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T15:53:54.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AuthService",
+              "DocumentMoniker": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\AuthService.csproj",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.csproj",
+              "ToolTip": "C:\\Users\\Azizi\\Desktop\\CVT Knowledge AI\\AuthService\\AuthService\\AuthService.csproj",
+              "RelativeToolTip": "AuthService\\AuthService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-13T10:57:04.177Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
