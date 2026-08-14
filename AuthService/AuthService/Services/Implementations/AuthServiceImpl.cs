@@ -158,7 +158,8 @@ public class AuthService : IAuthService
             issuer: jwtIssuer,
             audience: jwtAudience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
+            expires: DateTime.UtcNow.AddMinutes(
+                GetExpirationMinutes()),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler()
@@ -192,5 +193,16 @@ public class AuthService : IAuthService
 
             LastLoginAt = user.LastLoginAt
         };
+    }
+
+    // ============================================================
+    // JWT EXPIRATION
+    // ============================================================
+
+    private int GetExpirationMinutes()
+    {
+        return _configuration.GetValue<int>(
+            "Jwt:ExpirationMinutes",
+            120);
     }
 }
