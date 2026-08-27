@@ -24,6 +24,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService.Services.Implementations.AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// ============================================================
+// JWT
+// ============================================================
+
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Jwt:Key est manquant.");
 
@@ -66,6 +70,10 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+// ============================================================
+// Swagger
+// ============================================================
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -105,11 +113,23 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+// ============================================================
+// DATABASE + SEEDER
+// ============================================================
+
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+    var context = scope.ServiceProvider
+        .GetRequiredService<AuthDbContext>();
+
+    await context.Database.MigrateAsync();
+
     await DbSeeder.SeedAsync(context);
 }
+
+// ============================================================
+// HTTP PIPELINE
+// ============================================================
 
 if (app.Environment.IsDevelopment())
 {
@@ -117,9 +137,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// IMPORTANT : pas de HTTPS dans Docker
+// app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
