@@ -6,11 +6,25 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ============================================================
+// CONFIGURATION
+// ============================================================
+
 builder.Configuration
     .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+    .AddJsonFile(
+        "appsettings.json",
+        optional: false,
+        reloadOnChange: true)
+    .AddJsonFile(
+        "ocelot.json",
+        optional: false,
+        reloadOnChange: true)
     .AddEnvironmentVariables();
+
+// ============================================================
+// JWT
+// ============================================================
 
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Jwt:Key est manquant.");
@@ -29,30 +43,46 @@ if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
+    .AddJwtBearer(
+        JwtBearerDefaults.AuthenticationScheme,
+        options =>
         {
-            ValidateIssuer = true,
-            ValidIssuer = jwtIssuer,
+            options.TokenValidationParameters =
+                new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtIssuer,
 
-            ValidateAudience = true,
-            ValidAudience = jwtAudience,
+                    ValidateAudience = true,
+                    ValidAudience = jwtAudience,
 
-            ValidateLifetime = true,
+                    ValidateLifetime = true,
 
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtKey)),
+                    ValidateIssuerSigningKey = true,
 
-            ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(jwtKey)),
 
-            RoleClaimType = System.Security.Claims.ClaimTypes.Role,
-            NameClaimType = System.Security.Claims.ClaimTypes.Name
-        };
-    });
+                    ClockSkew = TimeSpan.Zero,
+
+                    RoleClaimType =
+                        System.Security.Claims.ClaimTypes.Role,
+
+                    NameClaimType =
+                        System.Security.Claims.ClaimTypes.Name
+                };
+        });
+
+// ============================================================
+// AUTHORIZATION
+// ============================================================
 
 builder.Services.AddAuthorization();
+
+// ============================================================
+// CORS
+// ============================================================
 
 builder.Services.AddCors(options =>
 {
@@ -65,9 +95,17 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ============================================================
+// OCELOT
+// ============================================================
+
 builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
+
+// ============================================================
+// HTTP PIPELINE
+// ============================================================
 
 app.UseCors("DevelopmentCors");
 

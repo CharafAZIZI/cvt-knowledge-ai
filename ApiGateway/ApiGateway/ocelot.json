@@ -7,8 +7,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5280
+          "Host": "auth-service",
+          "Port": 8080
         }
       ]
     },
@@ -19,8 +19,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5280
+          "Host": "auth-service",
+          "Port": 8080
         }
       ],
       "AuthenticationOptions": {
@@ -34,8 +34,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5280
+          "Host": "auth-service",
+          "Port": 8080
         }
       ],
       "AuthenticationOptions": {
@@ -49,8 +49,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5280
+          "Host": "auth-service",
+          "Port": 8080
         }
       ],
       "AuthenticationOptions": {
@@ -64,8 +64,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "document-service",
+          "Port": 8080
         }
       ],
       "AuthenticationOptions": {
@@ -79,8 +79,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "document-service",
+          "Port": 8080
         }
       ],
       "AuthenticationOptions": {
@@ -89,6 +89,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5158"
+    "BaseUrl": "http://localhost:8080"
   }
 }
