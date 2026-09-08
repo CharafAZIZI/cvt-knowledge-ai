@@ -1,0 +1,96 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
+  <div class="absolute inset-0 bg-ink-900/40" (click)="close()"></div>
+
+  <div class="relative w-full max-w-md rounded-xl bg-white shadow-lg">
+    <div class="flex items-center justify-between border-b border-ink-100 px-5 py-4">
+      <h2 class="text-sm font-semibold text-ink-900">
+        {{ isEditMode ? "Modifier l'administrateur" : 'Ajouter un administrateur' }}
+      </h2>
+      <button type="button" (click)="close()" class="text-ink-400 hover:text-ink-600" aria-label="Fermer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="px-5 py-4 space-y-4" novalidate>
+      @if (errorMessage()) {
+        <div class="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-ink-700 mb-1.5">Prénom</label>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            class="w-full rounded-md border border-ink-300 px-3 py-2 text-sm text-ink-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            [class.border-red-400]="form.controls.firstName.invalid && form.controls.firstName.touched"
+          />
+        </div>
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-ink-700 mb-1.5">Nom</label>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            class="w-full rounded-md border border-ink-300 px-3 py-2 text-sm text-ink-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            [class.border-red-400]="form.controls.lastName.invalid && form.controls.lastName.touched"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="user-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
+        <input
+          id="user-email"
+          type="email"
+          formControlName="email"
+          class="w-full rounded-md border border-ink-300 px-3 py-2 text-sm text-ink-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+          [class.border-red-400]="form.controls.email.invalid && form.controls.email.touched"
+        />
+        @if (form.controls.email.invalid && form.controls.email.touched) {
+          <p class="mt-1 text-xs text-red-600">Entrez une adresse email valide.</p>
+        }
+      </div>
+
+      @if (!isEditMode) {
+        <div>
+          <label for="user-password" class="block text-sm font-medium text-ink-700 mb-1.5">Mot de passe</label>
+          <input
+            id="user-password"
+            type="password"
+            formControlName="password"
+            placeholder="8 caractères minimum"
+            class="w-full rounded-md border border-ink-300 px-3 py-2 text-sm text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            [class.border-red-400]="form.controls.password.invalid && form.controls.password.touched"
+          />
+          @if (form.controls.password.invalid && form.controls.password.touched) {
+            <p class="mt-1 text-xs text-red-600">Le mot de passe doit contenir au moins 8 caractères.</p>
+          }
+        </div>
+      }
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button
+          type="button"
+          (click)="close()"
+          class="rounded-md border border-ink-300 px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          [disabled]="isSubmitting()"
+          class="flex items-center gap-2 rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          @if (isSubmitting()) {
+            <span class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin"></span>
+          }
+          {{ isEditMode ? 'Enregistrer' : 'Ajouter' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,7 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentService.DTOs;
 
+/// <summary>
+/// Métadonnées à mettre à jour. Le fichier (optionnel, pour remplacer le
+/// PDF existant) est reçu séparément dans le contrôleur — volontairement
+/// pas imbriqué ici, pour éviter toute ambiguïté de binding d'un
+/// IFormFile? optionnel à l'intérieur d'un objet complexe.
+/// </summary>
 public class UpdateDocumentRequest
 {
     [Required]
@@ -10,15 +16,4 @@ public class UpdateDocumentRequest
 
     [StringLength(1000)]
     public string Description { get; set; } = string.Empty;
-
-    [Required]
-    [StringLength(255)]
-    public string FileName { get; set; } = string.Empty;
-
-    [Required]
-    [StringLength(100)]
-    public string FileType { get; set; } = string.Empty;
-
-    [StringLength(500)]
-    public string FilePath { get; set; } = string.Empty;
 }

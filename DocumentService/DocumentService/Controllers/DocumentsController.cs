@@ -8,15 +8,23 @@ namespace DocumentService.Controllers;
 
 [ApiController]
 [Route("api/documents")]
-[Authorize(Roles = "ADMIN")]
+[Authorize] // authentifié requis par défaut ; ADMIN uniquement sur les actions d'écriture
 public class DocumentsController : ControllerBase
 {
     private readonly IDocumentService _documentService;
+    private readonly ILogger<DocumentsController> _logger;
 
-    public DocumentsController(IDocumentService documentService)
+    public DocumentsController(
+        IDocumentService documentService,
+        ILogger<DocumentsController> logger)
     {
         _documentService = documentService;
+        _logger = logger;
     }
+
+    // ============================================================
+    // LECTURE — accessible à tout utilisateur authentifié (ADMIN ou USER)
+    // ============================================================
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -57,29 +65,97 @@ public class DocumentsController : ControllerBase
         return Ok(document);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create(
-        [FromBody] CreateDocumentRequest request)
+    [HttpGet("{id:int}/download")]
+    public async Task<IActionResult> Download(int id)
     {
-        if (!ModelState.IsValid)
+        var result = await _documentService.DownloadAsync(id);
+
+        if (result == null)
         {
-            return ValidationProblem(ModelState);
+            return NotFound(new
+            {
+                message = "Document introuvable."
+            });
+        }
+
+        var (stream, fileName, contentType) = result.Value;
+
+        // Empêche tout cache client (navigateur, proxy) : l'URL reste la
+        // même après un remplacement de fichier, il ne faut jamais servir
+        // une version obsolète.
+        Response.Headers.CacheControl = "no-store, no-cache, must-revalidate";
+        Response.Headers.Pragma = "no-cache";
+
+        return File(
+            stream,
+            string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType,
+            fileName);
+    }
+
+    // ============================================================
+    // ÉCRITURE — réservée à ADMIN
+    // ============================================================
+
+    [HttpPost]
+    [Authorize(Roles = "ADMIN")]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(100 * 1024 * 1024)]
+    public async Task<IActionResult> Create(CancellationToken cancellationToken)
+    {
+        // Lecture explicite du multipart/form-data. On évite ainsi de
+        // dépendre du model binder pour les métadonnées + IFormFile.
+        var form = await Request.ReadFormAsync(cancellationToken);
+
+        var title = form["title"].ToString().Trim();
+        var description = form["description"].ToString();
+        var file = form.Files["file"];
+
+        _logger.LogInformation(
+            "[CREATE] title='{Title}' | descriptionLength={DescriptionLength} | file={FileInfo}",
+            title,
+            description.Length,
+            file == null ? "NULL" : $"{file.FileName} ({file.Length} octets)");
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return BadRequest(new { message = "Le titre est obligatoire." });
+        }
+
+        if (title.Length > 200)
+        {
+            return BadRequest(new { message = "Le titre ne doit pas dépasser 200 caractères." });
+        }
+
+        if (description.Length > 1000)
+        {
+            return BadRequest(new { message = "La description ne doit pas dépasser 1000 caractères." });
+        }
+
+        if (file == null)
+        {
+            return BadRequest(new { message = "Le fichier est obligatoire." });
+        }
+
+        if (file.Length == 0)
+        {
+            return BadRequest(new { message = "Le fichier est vide." });
         }
 
         var claim = User.FindFirst(ClaimTypes.NameIdentifier);
 
-        if (claim == null ||
-            !int.TryParse(claim.Value, out var userId))
+        if (claim == null || !int.TryParse(claim.Value, out var userId))
         {
-            return Unauthorized(new
-            {
-                message = "Administrateur non identifié."
-            });
+            return Unauthorized(new { message = "Administrateur non identifié." });
         }
 
-        var document = await _documentService.CreateAsync(
-            request,
-            userId);
+        var request = new CreateDocumentRequest
+        {
+            Title = title,
+            Description = description,
+            File = file
+        };
+
+        var document = await _documentService.CreateAsync(request, userId, cancellationToken);
 
         return CreatedAtAction(
             nameof(GetById),
@@ -88,29 +164,94 @@ public class DocumentsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "ADMIN")]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(100 * 1024 * 1024)]
     public async Task<IActionResult> Update(
         int id,
-        [FromBody] UpdateDocumentRequest request)
+        [FromForm] string title,
+        [FromForm] string description,
+        [FromForm] IFormFile? file,
+        CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-        {
-            return ValidationProblem(ModelState);
-        }
+            _logger.LogInformation(
+                "[UPDATE] id={Id} - début | title='{Title}' | descriptionLength={DescriptionLength} | file={FileInfo}",
+                id,
+                title,
+                description?.Length ?? 0,
+                file == null
+                    ? "NULL"
+                    : $"{file.FileName} ({file.Length} octets)");
 
-        var document = await _documentService.UpdateAsync(id, request);
+            title = title?.Trim() ?? string.Empty;
+            description ??= string.Empty;
 
-        if (document == null)
-        {
-            return NotFound(new
+            if (string.IsNullOrWhiteSpace(title))
             {
-                message = "Document introuvable."
-            });
-        }
+                return BadRequest(new
+                {
+                    message = "Le titre est obligatoire."
+                });
+            }
 
-        return Ok(document);
+            if (title.Length > 200)
+            {
+                return BadRequest(new
+                {
+                    message = "Le titre ne doit pas dépasser 200 caractères."
+                });
+            }
+
+            if (description.Length > 1000)
+            {
+                return BadRequest(new
+                {
+                    message = "La description ne doit pas dépasser 1000 caractères."
+                });
+            }
+
+            if (file != null && file.Length == 0)
+            {
+                return BadRequest(new
+                {
+                    message = "Le fichier reçu est vide."
+                });
+            }
+
+            _logger.LogInformation(
+                "[UPDATE] id={Id} | binding OK | title='{Title}' | description='{Description}' | file={FileInfo}",
+                id,
+                title,
+                description,
+                file == null
+                    ? "NULL"
+                    : $"{file.FileName} ({file.Length} octets)");
+
+            var request = new UpdateDocumentRequest
+            {
+                Title = title,
+                Description = description
+            };
+
+            var document = await _documentService.UpdateAsync(
+                id,
+                request,
+                file,
+                cancellationToken);
+
+            if (document == null)
+            {
+                return NotFound(new
+                {
+                    message = "Document introuvable."
+                });
+            }
+
+            return Ok(document);
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _documentService.DeleteAsync(id);
@@ -126,44 +267,6 @@ public class DocumentsController : ControllerBase
         return Ok(new
         {
             message = "Document supprimé avec succès."
-        });
-    }
-
-    [HttpPut("{id:int}/activate")]
-    public async Task<IActionResult> Activate(int id)
-    {
-        var result = await _documentService.ActivateAsync(id);
-
-        if (!result)
-        {
-            return NotFound(new
-            {
-                message = "Document introuvable."
-            });
-        }
-
-        return Ok(new
-        {
-            message = "Document activé avec succès."
-        });
-    }
-
-    [HttpPut("{id:int}/deactivate")]
-    public async Task<IActionResult> Deactivate(int id)
-    {
-        var result = await _documentService.DeactivateAsync(id);
-
-        if (!result)
-        {
-            return NotFound(new
-            {
-                message = "Document introuvable."
-            });
-        }
-
-        return Ok(new
-        {
-            message = "Document désactivé avec succès."
         });
     }
 }

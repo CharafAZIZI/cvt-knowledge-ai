@@ -86,6 +86,21 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKeys": [ "Bearer" ]
       }
+    },
+    {
+      "UpstreamPathTemplate": "/api/ai/ask",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/ask",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ai-service",
+          "Port": 8000
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "Bearer" ]
+      }
     }
   ],
   "GlobalConfiguration": {

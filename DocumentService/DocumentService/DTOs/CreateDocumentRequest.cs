@@ -2,6 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DocumentService.DTOs;
 
+/// <summary>
+/// Métadonnées envoyées avec le fichier lors de l'upload (multipart/form-data).
+/// FileName, FileType et FilePath sont déduits automatiquement du fichier
+/// reçu, ils ne sont plus saisis manuellement par le client.
+/// </summary>
 public class CreateDocumentRequest
 {
     [Required]
@@ -12,13 +17,5 @@ public class CreateDocumentRequest
     public string Description { get; set; } = string.Empty;
 
     [Required]
-    [StringLength(255)]
-    public string FileName { get; set; } = string.Empty;
-
-    [Required]
-    [StringLength(100)]
-    public string FileType { get; set; } = string.Empty;
-
-    [StringLength(500)]
-    public string FilePath { get; set; } = string.Empty;
+    public IFormFile File { get; set; } = null!;
 }

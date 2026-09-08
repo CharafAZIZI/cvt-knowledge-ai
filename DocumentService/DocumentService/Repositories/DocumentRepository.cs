@@ -1,4 +1,4 @@
-﻿using DocumentService.Data;
+using DocumentService.Data;
 using DocumentService.Models;
 using DocumentService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -79,57 +79,16 @@ public class DocumentRepository : IDocumentRepository
         return true;
     }
 
-    public async Task<bool> ActivateAsync(int id)
-    {
-        var document =
-            await _context.Documents
-                .FirstOrDefaultAsync(d => d.Id == id);
-
-        if (document == null)
-        {
-            return false;
-        }
-
-        document.IsActive = true;
-        document.UpdatedAt = DateTime.UtcNow;
-
-        await _context.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<bool> DeactivateAsync(int id)
-    {
-        var document =
-            await _context.Documents
-                .FirstOrDefaultAsync(d => d.Id == id);
-
-        if (document == null)
-        {
-            return false;
-        }
-
-        document.IsActive = false;
-        document.UpdatedAt = DateTime.UtcNow;
-
-        await _context.SaveChangesAsync();
-
-        return true;
-    }
-
     public async Task<List<Document>> SearchAsync(
         string searchTerm)
     {
         return await _context.Documents
             .AsNoTracking()
             .Where(d =>
-                d.IsActive &&
-                (
-                    d.Title.Contains(searchTerm) ||
-                    d.Description.Contains(searchTerm) ||
-                    d.FileName.Contains(searchTerm) ||
-                    d.FileType.Contains(searchTerm)
-                ))
+                d.Title.Contains(searchTerm) ||
+                d.Description.Contains(searchTerm) ||
+                d.FileName.Contains(searchTerm) ||
+                d.FileType.Contains(searchTerm))
             .OrderByDescending(d => d.CreatedAt)
             .ToListAsync();
     }

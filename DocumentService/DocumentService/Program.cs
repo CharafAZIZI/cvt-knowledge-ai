@@ -1,10 +1,13 @@
 using DocumentService.Data;
 using DocumentService.Repositories;
 using DocumentService.Repositories.Interfaces;
+using DocumentService.Services.Ai;
 using DocumentService.Services.Interfaces;
+using DocumentService.Services.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Minio;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +29,43 @@ builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<
     IDocumentService,
     DocumentService.Services.DocumentServiceImpl>();
+
+// ============================================================
+// MINIO (stockage des fichiers)
+// ============================================================
+
+builder.Services.Configure<MinioOptions>(
+    builder.Configuration.GetSection("Minio"));
+
+var minioOptions = builder.Configuration
+    .GetSection("Minio")
+    .Get<MinioOptions>()
+    ?? throw new InvalidOperationException("Configuration Minio manquante.");
+
+builder.Services.AddSingleton<IMinioClient>(_ =>
+    new MinioClient()
+        .WithEndpoint(minioOptions.Endpoint)
+        .WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey)
+        .WithSSL(minioOptions.UseSSL)
+        // Timeout explicite : une opération réseau MinIO ne doit pas
+        // attendre indéfiniment. La valeur est configurable dans appsettings.
+        .WithTimeout((int)TimeSpan.FromSeconds(minioOptions.TimeoutSeconds).TotalMilliseconds)
+        .Build());
+
+builder.Services.AddScoped<IFileStorageService, MinioStorageService>();
+
+// ============================================================
+// SERVICE IA (notification d'indexation)
+// ============================================================
+
+var aiServiceBaseUrl = builder.Configuration["AiService:BaseUrl"]
+    ?? throw new InvalidOperationException("AiService:BaseUrl est manquant.");
+
+builder.Services.AddHttpClient<IAiIngestionClient, AiIngestionClient>(client =>
+{
+    client.BaseAddress = new Uri(aiServiceBaseUrl);
+    client.Timeout = TimeSpan.FromSeconds(60);
+});
 
 // ============================================================
 // JWT
@@ -94,6 +134,11 @@ using (var scope = app.Services.CreateScope())
         .GetRequiredService<DocumentDbContext>();
 
     await context.Database.MigrateAsync();
+
+    var storage = (MinioStorageService)scope.ServiceProvider
+        .GetRequiredService<IFileStorageService>();
+
+    await storage.EnsureBucketExistsAsync();
 }
 
 // ============================================================
