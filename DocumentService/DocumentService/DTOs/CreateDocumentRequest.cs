@@ -1,3 +1,4 @@
+using DocumentService.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocumentService.DTOs;
@@ -15,6 +16,9 @@ public class CreateDocumentRequest
 
     [StringLength(1000)]
     public string Description { get; set; } = string.Empty;
+
+    [Required]
+    public DocumentCategory Category { get; set; }
 
     [Required]
     public IFormFile File { get; set; } = null!;

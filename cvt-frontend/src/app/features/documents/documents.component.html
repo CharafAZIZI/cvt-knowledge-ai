@@ -17,8 +17,8 @@
     }
   </div>
 
-  <div class="mb-4">
-    <div class="relative max-w-sm">
+  <div class="mb-4 flex flex-col sm:flex-row gap-3">
+    <div class="relative max-w-sm flex-1">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input
         type="search"
@@ -27,6 +27,16 @@
         class="w-full rounded-md border border-ink-300 pl-9 pr-3 py-2 text-sm text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
       />
     </div>
+
+    <select
+      [formControl]="categoryControl"
+      class="rounded-md border border-ink-300 px-3 py-2 text-sm text-ink-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+    >
+      <option value="">Toutes les catégories</option>
+      @for (cat of categoryOptions; track cat.value) {
+        <option [value]="cat.value">{{ cat.label }}</option>
+      }
+    </select>
   </div>
 
   @if (errorMessage()) {
@@ -62,6 +72,9 @@
               <tr class="hover:bg-ink-50/60">
                 <td class="px-5 py-3">
                   <p class="font-medium text-ink-900">{{ doc.title }}</p>
+                  <span class="inline-block mt-1 rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-medium text-ink-600">
+                    {{ getCategoryLabel(doc.category) }}
+                  </span>
                   @if (doc.description) {
                     <p class="text-xs text-ink-500 line-clamp-1 mt-0.5">{{ doc.description }}</p>
                   }

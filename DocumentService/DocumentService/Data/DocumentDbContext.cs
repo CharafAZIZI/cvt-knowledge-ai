@@ -50,6 +50,11 @@ public class DocumentDbContext : DbContext
 
             entity.Property(d => d.IsActive)
                 .IsRequired();
+
+            entity.Property(d => d.Category)                 
+                .IsRequired()
+                .HasConversion<string>()                      
+                .HasMaxLength(50);
         });
     }
 }

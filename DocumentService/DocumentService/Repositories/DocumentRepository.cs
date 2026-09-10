@@ -1,6 +1,5 @@
 using DocumentService.Data;
 using DocumentService.Models;
-using DocumentService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentService.Repositories;
@@ -51,6 +50,7 @@ public class DocumentRepository : IDocumentRepository
 
         existingDocument.Title = document.Title;
         existingDocument.Description = document.Description;
+        existingDocument.Category = document.Category;
         existingDocument.FileName = document.FileName;
         existingDocument.FileType = document.FileType;
         existingDocument.FilePath = document.FilePath;
@@ -79,16 +79,28 @@ public class DocumentRepository : IDocumentRepository
         return true;
     }
 
+    
     public async Task<List<Document>> SearchAsync(
-        string searchTerm)
+    string? searchTerm,
+    DocumentCategory? category)
     {
-        return await _context.Documents
-            .AsNoTracking()
-            .Where(d =>
+        var query = _context.Documents.AsNoTracking().AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(d =>
                 d.Title.Contains(searchTerm) ||
                 d.Description.Contains(searchTerm) ||
                 d.FileName.Contains(searchTerm) ||
-                d.FileType.Contains(searchTerm))
+                d.FileType.Contains(searchTerm));
+        }
+
+        if (category.HasValue)
+        {
+            query = query.Where(d => d.Category == category.Value);
+        }
+
+        return await query
             .OrderByDescending(d => d.CreatedAt)
             .ToListAsync();
     }

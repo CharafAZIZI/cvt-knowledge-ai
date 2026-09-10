@@ -7,6 +7,7 @@ import {
   CvtDocument,
   UpdateDocumentPayload,
 } from '../models/document.model';
+import { DocumentCategory } from '../constants/document-category.constant';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentService {
@@ -22,10 +23,17 @@ export class DocumentService {
     return this.http.get<CvtDocument>(`${this.apiUrl}/${id}`);
   }
 
-  search(searchTerm: string): Observable<CvtDocument[]> {
-    return this.http.get<CvtDocument[]>(`${this.apiUrl}/search`, {
-      params: { searchTerm },
-    });
+  search(searchTerm: string, category?: DocumentCategory | null): Observable<CvtDocument[]> {
+    const params: Record<string, string> = {};
+    if (searchTerm) params['searchTerm'] = searchTerm;
+    if (category) params['category'] = category;
+    return this.http.get<CvtDocument[]>(`${this.apiUrl}/search`, { params });
+  }
+
+  getByCategory(category: DocumentCategory | null): Observable<CvtDocument[]> {
+    const params: Record<string, string> = {};
+    if (category) params['category'] = category;
+    return this.http.get<CvtDocument[]>(this.apiUrl, { params });
   }
 
   /**
@@ -36,6 +44,7 @@ export class DocumentService {
     const formData = new FormData();
     formData.append('title', payload.title);
     formData.append('description', payload.description ?? '');
+    formData.append('category', payload.category);
     formData.append('file', payload.file);
 
     return this.http.post<CvtDocument>(this.apiUrl, formData);
@@ -50,6 +59,7 @@ export class DocumentService {
     const formData = new FormData();
     formData.append('title', payload.title);
     formData.append('description', payload.description ?? '');
+    formData.append('category', payload.category);
     if (payload.file) {
       formData.append('file', payload.file);
     }

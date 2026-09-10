@@ -9,6 +9,7 @@ import { CvtDocument } from '../../core/models/document.model';
 import { extractErrorMessage } from '../../core/utils/http-error.util';
 import { DocumentFormModalComponent } from './components/document-form-modal/document-form-modal.component';
 import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { DOCUMENT_CATEGORIES, DocumentCategory, getCategoryLabel } from '../../core/constants/document-category.constant';
 
 const PAGE_SIZE = 10;
 
@@ -45,12 +46,18 @@ export class DocumentsComponent implements OnInit {
 
   readonly totalPages = () => Math.max(1, Math.ceil(this.documents().length / PAGE_SIZE));
 
+  readonly categoryOptions = DOCUMENT_CATEGORIES;
+  readonly categoryControl = new FormControl<DocumentCategory | ''>('', { nonNullable: true });
+  readonly getCategoryLabel = getCategoryLabel;
+
   ngOnInit(): void {
     this.loadDocuments();
 
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((term) => this.runSearch(term));
+      .subscribe(() => this.runSearch());
+
+    this.categoryControl.valueChanges.subscribe(() => this.runSearch());
   }
 
   private loadDocuments(): void {
@@ -70,29 +77,30 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  private runSearch(term: string): void {
-    const trimmed = term.trim();
+  private runSearch(): void {
+  const term = this.searchControl.value.trim();
+  const category = this.categoryControl.value || null;
 
-    if (!trimmed) {
-      this.loadDocuments();
-      return;
-    }
-
-    this.isLoading.set(true);
-    this.errorMessage.set(null);
-
-    this.documentService.search(trimmed).subscribe({
-      next: (documents) => {
-        this.documents.set(documents);
-        this.currentPage.set(1);
-        this.isLoading.set(false);
-      },
-      error: (error) => {
-        this.errorMessage.set(extractErrorMessage(error, 'La recherche a échoué.'));
-        this.isLoading.set(false);
-      },
-    });
+  if (!term && !category) {
+    this.loadDocuments();
+    return;
   }
+
+  this.isLoading.set(true);
+  this.errorMessage.set(null);
+
+  this.documentService.search(term, category).subscribe({
+    next: (documents) => {
+      this.documents.set(documents);
+      this.currentPage.set(1);
+      this.isLoading.set(false);
+    },
+    error: (error) => {
+      this.errorMessage.set(extractErrorMessage(error, 'La recherche a échoué.'));
+      this.isLoading.set(false);
+    },
+  });
+}
 
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages()) {

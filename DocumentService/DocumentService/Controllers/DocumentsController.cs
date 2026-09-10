@@ -1,5 +1,6 @@
 using DocumentService.DTOs;
-using DocumentService.Services.Interfaces;
+using DocumentService.Models;
+using DocumentService.Services.Documents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -27,25 +28,26 @@ public class DocumentsController : ControllerBase
     // ============================================================
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] DocumentCategory? category)
     {
-        var documents = await _documentService.GetAllAsync();
+        var documents = category.HasValue
+            ? await _documentService.SearchAsync(null, category)
+            : await _documentService.GetAllAsync();
+
         return Ok(documents);
     }
 
     [HttpGet("search")]
     public async Task<IActionResult> Search(
-        [FromQuery] string searchTerm)
+        [FromQuery] string? searchTerm,
+        [FromQuery] DocumentCategory? category)
     {
-        if (string.IsNullOrWhiteSpace(searchTerm))
+        if (string.IsNullOrWhiteSpace(searchTerm) && !category.HasValue)
         {
-            return BadRequest(new
-            {
-                message = "Le terme de recherche est obligatoire."
-            });
+            return BadRequest(new { message = "Un terme de recherche ou une catégorie est requis." });
         }
 
-        var documents = await _documentService.SearchAsync(searchTerm);
+        var documents = await _documentService.SearchAsync(searchTerm, category);
         return Ok(documents);
     }
 
@@ -108,6 +110,7 @@ public class DocumentsController : ControllerBase
 
         var title = form["title"].ToString().Trim();
         var description = form["description"].ToString();
+        var categoryRaw = form["category"].ToString();
         var file = form.Files["file"];
 
         _logger.LogInformation(
@@ -131,6 +134,11 @@ public class DocumentsController : ControllerBase
             return BadRequest(new { message = "La description ne doit pas dépasser 1000 caractères." });
         }
 
+        if (!Enum.TryParse<DocumentCategory>(categoryRaw, out var category))
+        {
+            return BadRequest(new { message = "Catégorie invalide." });
+        }
+
         if (file == null)
         {
             return BadRequest(new { message = "Le fichier est obligatoire." });
@@ -152,6 +160,7 @@ public class DocumentsController : ControllerBase
         {
             Title = title,
             Description = description,
+            Category = category,
             File = file
         };
 
@@ -171,6 +180,7 @@ public class DocumentsController : ControllerBase
         int id,
         [FromForm] string title,
         [FromForm] string description,
+        [FromForm] string category,
         [FromForm] IFormFile? file,
         CancellationToken cancellationToken)
     {
@@ -210,12 +220,17 @@ public class DocumentsController : ControllerBase
                 });
             }
 
-            if (file != null && file.Length == 0)
+            if (!Enum.TryParse<DocumentCategory>(category, out var parsedCategory))
             {
-                return BadRequest(new
+                return BadRequest(new { message = "Catégorie invalide." });
+            }
+
+            if (file != null && file.Length == 0)
                 {
-                    message = "Le fichier reçu est vide."
-                });
+                    return BadRequest(new
+                    {
+                        message = "Le fichier reçu est vide."
+                    });
             }
 
             _logger.LogInformation(
@@ -230,7 +245,8 @@ public class DocumentsController : ControllerBase
             var request = new UpdateDocumentRequest
             {
                 Title = title,
-                Description = description
+                Description = description,
+                Category = parsedCategory
             };
 
             var document = await _documentService.UpdateAsync(

@@ -1,3 +1,4 @@
+using DocumentService.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocumentService.DTOs;
@@ -16,4 +17,7 @@ public class UpdateDocumentRequest
 
     [StringLength(1000)]
     public string Description { get; set; } = string.Empty;
+
+    [Required]
+    public DocumentCategory Category { get; set; }
 }

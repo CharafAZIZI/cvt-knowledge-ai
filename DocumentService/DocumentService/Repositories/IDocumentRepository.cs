@@ -1,6 +1,6 @@
 using DocumentService.Models;
 
-namespace DocumentService.Repositories.Interfaces;
+namespace DocumentService.Repositories;
 
 public interface IDocumentRepository
 {
@@ -14,5 +14,5 @@ public interface IDocumentRepository
 
     Task<bool> DeleteAsync(int id);
 
-    Task<List<Document>> SearchAsync(string searchTerm);
+    Task<List<Document>> SearchAsync(string? searchTerm, DocumentCategory? category);
 }

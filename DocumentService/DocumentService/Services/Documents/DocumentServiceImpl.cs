@@ -1,11 +1,10 @@
 using DocumentService.DTOs;
 using DocumentService.Models;
-using DocumentService.Repositories.Interfaces;
+using DocumentService.Repositories;
 using DocumentService.Services.Ai;
-using DocumentService.Services.Interfaces;
 using DocumentService.Services.Storage;
 
-namespace DocumentService.Services;
+namespace DocumentService.Services.Documents;
 
 public class DocumentServiceImpl : IDocumentService
 {
@@ -72,6 +71,7 @@ public class DocumentServiceImpl : IDocumentService
             {
                 Title = request.Title.Trim(),
                 Description = request.Description ?? string.Empty,
+                Category = request.Category,
                 FileName = request.File.FileName,
                 FileType = string.IsNullOrWhiteSpace(request.File.ContentType)
                     ? "application/octet-stream"
@@ -164,7 +164,7 @@ public class DocumentServiceImpl : IDocumentService
 
         existing.Title = request.Title.Trim();
         existing.Description = request.Description ?? string.Empty;
-
+        existing.Category = request.Category;
         var fileWasReplaced = file != null && file.Length > 0;
         var oldObjectKey = existing.FilePath;
         string? newObjectKey = null;
@@ -407,9 +407,9 @@ public class DocumentServiceImpl : IDocumentService
         return true;
     }
 
-    public async Task<List<DocumentResponse>> SearchAsync(string searchTerm)
+    public async Task<List<DocumentResponse>> SearchAsync(string? searchTerm, DocumentCategory? category)
     {
-        var documents = await _repository.SearchAsync(searchTerm);
+        var documents = await _repository.SearchAsync(searchTerm, category);
         return documents.Select(MapToResponse).ToList();
     }
 
@@ -438,7 +438,8 @@ public class DocumentServiceImpl : IDocumentService
             CreatedAt = document.CreatedAt,
             UpdatedAt = document.UpdatedAt,
             CreatedBy = document.CreatedBy,
-            IsActive = document.IsActive
+            IsActive = document.IsActive,
+            Category = document.Category
         };
     }
 }

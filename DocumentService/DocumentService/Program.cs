@@ -1,8 +1,7 @@
 using DocumentService.Data;
 using DocumentService.Repositories;
-using DocumentService.Repositories.Interfaces;
 using DocumentService.Services.Ai;
-using DocumentService.Services.Interfaces;
+using DocumentService.Services.Documents;
 using DocumentService.Services.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +27,7 @@ builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 
 builder.Services.AddScoped<
     IDocumentService,
-    DocumentService.Services.DocumentServiceImpl>();
+    DocumentServiceImpl>();
 
 // ============================================================
 // MINIO (stockage des fichiers)

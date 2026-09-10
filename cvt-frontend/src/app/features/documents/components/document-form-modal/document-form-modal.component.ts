@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentService } from '../../../../core/services/document.service';
 import { CvtDocument } from '../../../../core/models/document.model';
 import { extractErrorMessage } from '../../../../core/utils/http-error.util';
+import { DOCUMENT_CATEGORIES, DocumentCategory } from '../../../../core/constants/document-category.constant';
 
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024; // aligné sur [RequestSizeLimit] côté DocumentsController
 const ALLOWED_EXTENSIONS = ['.pdf'];
@@ -27,10 +28,12 @@ export class DocumentFormModalComponent implements OnInit {
   readonly errorMessage = signal<string | null>(null);
   readonly fileError = signal<string | null>(null);
   readonly selectedFile = signal<File | null>(null);
+  readonly categoryOptions = DOCUMENT_CATEGORIES;
 
   readonly form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(200)]],
     description: ['', [Validators.maxLength(1000)]],
+    category: this.fb.nonNullable.control<DocumentCategory | ''>('', [Validators.required]),
   });
 
   get isEditMode(): boolean {
@@ -42,6 +45,7 @@ export class DocumentFormModalComponent implements OnInit {
       this.form.patchValue({
         title: this.document.title,
         description: this.document.description,
+        category: this.document.category,
       });
     }
   }
@@ -87,18 +91,21 @@ export class DocumentFormModalComponent implements OnInit {
       return;
     }
 
-    const { title, description } = this.form.getRawValue();
+    const { title, description, category } = this.form.getRawValue();
+    const selectedCategory = category as DocumentCategory; 
     this.isSubmitting.set(true);
 
     const request$ = this.isEditMode
       ? this.documentService.update(this.document!.id, {
           title,
           description,
+          category: selectedCategory,
           file: this.selectedFile(),
         })
       : this.documentService.create({
           title,
           description,
+          category: selectedCategory,
           file: this.selectedFile()!,
         });
 

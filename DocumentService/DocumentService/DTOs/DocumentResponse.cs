@@ -1,4 +1,6 @@
-﻿namespace DocumentService.DTOs;
+﻿using DocumentService.Models;
+
+namespace DocumentService.DTOs;
 
 public class DocumentResponse
 {
@@ -21,4 +23,6 @@ public class DocumentResponse
     public int CreatedBy { get; set; }
 
     public bool IsActive { get; set; }
+
+    public DocumentCategory Category { get; set; }  
 }

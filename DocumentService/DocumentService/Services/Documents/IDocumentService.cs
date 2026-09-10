@@ -1,6 +1,7 @@
 using DocumentService.DTOs;
+using DocumentService.Models;
 
-namespace DocumentService.Services.Interfaces;
+namespace DocumentService.Services.Documents;
 
 public interface IDocumentService
 {
@@ -21,8 +22,7 @@ public interface IDocumentService
 
     Task<bool> DeleteAsync(int id);
 
-    Task<List<DocumentResponse>> SearchAsync(
-        string searchTerm);
+    Task<List<DocumentResponse>> SearchAsync(string? searchTerm, DocumentCategory? category);
 
     Task<(Stream Stream, string FileName, string ContentType)?> DownloadAsync(int id);
 }

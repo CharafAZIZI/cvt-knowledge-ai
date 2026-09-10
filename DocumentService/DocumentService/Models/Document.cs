@@ -21,4 +21,6 @@ public class Document
     public int CreatedBy { get; set; }
 
     public bool IsActive { get; set; }
+
+    public DocumentCategory Category { get; set; } = DocumentCategory.Autre;
 }

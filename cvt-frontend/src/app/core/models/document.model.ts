@@ -1,8 +1,11 @@
+import { DocumentCategory } from '../constants/document-category.constant';
+
 // Reflète exactement DocumentService.DTOs.DocumentResponse
 export interface CvtDocument {
   id: number;
   title: string;
   description: string;
+  category: DocumentCategory;
   fileName: string;
   fileType: string;
   filePath: string;
@@ -17,6 +20,7 @@ export interface CvtDocument {
 export interface CreateDocumentPayload {
   title: string;
   description: string;
+  category: DocumentCategory;
   file: File;
 }
 
@@ -25,5 +29,6 @@ export interface CreateDocumentPayload {
 export interface UpdateDocumentPayload {
   title: string;
   description: string;
+  category: DocumentCategory;
   file?: File | null;
 }
