@@ -53,14 +53,35 @@ def delete_document(document_id: int) -> None:
     _collection.delete(where={"document_id": document_id})
 
 
-def search(query: str, top_k: int) -> list[dict]:
-    results = _collection.query(query_texts=[query], n_results=top_k)
+def search(query: str, top_k: int, max_distance: float | None = None) -> list[dict]:
+    """
+    Récupère les chunks les plus proches de la question, puis exclut ceux
+    dont la distance dépasse `max_distance` (chunk pas vraiment pertinent).
+
+    Sans ce filtre, ChromaDB renvoie toujours les `top_k` résultats les
+    "moins mauvais", même si aucun document ne traite réellement du sujet
+    de la question — ce qui produisait des sources hors-sujet.
+    """
+    if max_distance is None:
+        max_distance = settings.retrieval_max_distance
+
+    results = _collection.query(
+        query_texts=[query],
+        n_results=top_k,
+        include=["documents", "metadatas", "distances"],
+    )
 
     if not results["documents"] or not results["documents"][0]:
         return []
 
     hits = []
-    for text, metadata in zip(results["documents"][0], results["metadatas"][0]):
-        hits.append({"text": text, **metadata})
+    for text, metadata, distance in zip(
+        results["documents"][0],
+        results["metadatas"][0],
+        results["distances"][0],
+    ):
+        if distance > max_distance:
+            continue
+        hits.append({"text": text, "distance": distance, **metadata})
 
     return hits

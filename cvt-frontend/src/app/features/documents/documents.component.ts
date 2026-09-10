@@ -9,7 +9,7 @@ import { CvtDocument } from '../../core/models/document.model';
 import { extractErrorMessage } from '../../core/utils/http-error.util';
 import { DocumentFormModalComponent } from './components/document-form-modal/document-form-modal.component';
 import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
-import { DOCUMENT_CATEGORIES, DocumentCategory, getCategoryLabel } from '../../core/constants/document-category.constant';
+import { DOCUMENT_CATEGORIES, DocumentCategory, getCategoryLabel, getCategoryBadgeClasses } from '../../core/constants/document-category.constant';
 
 const PAGE_SIZE = 10;
 
@@ -38,6 +38,7 @@ export class DocumentsComponent implements OnInit {
   readonly isDeleting = signal(false);
 
   readonly downloadingId = signal<number | null>(null);
+  readonly viewingId = signal<number | null>(null);
 
   readonly pagedDocuments = () => {
     const start = (this.currentPage() - 1) * PAGE_SIZE;
@@ -49,6 +50,7 @@ export class DocumentsComponent implements OnInit {
   readonly categoryOptions = DOCUMENT_CATEGORIES;
   readonly categoryControl = new FormControl<DocumentCategory | ''>('', { nonNullable: true });
   readonly getCategoryLabel = getCategoryLabel;
+  readonly getCategoryBadgeClasses = getCategoryBadgeClasses;
 
   ngOnInit(): void {
     this.loadDocuments();
@@ -160,6 +162,24 @@ export class DocumentsComponent implements OnInit {
       },
     });
   }
+
+  viewDocument(document: CvtDocument): void {
+  this.viewingId.set(document.id);
+
+  this.documentService.download(document.id).subscribe({
+    next: (blob) => {
+      this.viewingId.set(null);
+      const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+      window.open(url, '_blank');
+      // Libère la mémoire après un délai (le temps que l'onglet charge le PDF).
+      setTimeout(() => window.URL.revokeObjectURL(url), 60000);
+    },
+    error: (error) => {
+      this.viewingId.set(null);
+      this.toastService.error(extractErrorMessage(error, "L'aperçu du document a échoué."));
+    },
+  });
+}
 
   downloadDocument(document: CvtDocument): void {
     this.downloadingId.set(document.id);

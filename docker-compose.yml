@@ -92,6 +92,7 @@ services:
     volumes:
       - chroma_data:/data/chroma
       - ai_model_cache:/root/.cache
+      - ai_history_data:/data/history
 
     ports:
       - "5100:8000"
@@ -184,3 +185,4 @@ volumes:
   ollama_data:
   chroma_data:
   ai_model_cache:
+  ai_history_data:

@@ -1,6 +1,7 @@
 // Reflète AiService.app.main.AskRequest
 export interface AskRequest {
   question: string;
+  conversation_id?: number | null;
 }
 
 // Reflète AiService.app.main.Source
@@ -26,4 +27,35 @@ export interface ChatMessage {
   sources?: AiSource[];
   isError?: boolean;
   createdAt: Date;
+}
+
+// Reflète AiService.app.history_store (liste : GET /ai/conversations)
+export interface ConversationSummary {
+  id: number;
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Message tel que renvoyé par GET /ai/conversations/{id}
+export interface StoredMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  sources: AiSource[];
+  created_at: string;
+}
+
+// Reflète la réponse de GET /ai/conversations/{id}
+export interface ConversationDetail {
+  id: number;
+  messages: StoredMessage[];
+}
+
+// Un évènement du flux SSE renvoyé par POST /ai/ask
+export interface AskStreamEvent {
+  type: 'start' | 'token' | 'done' | 'error';
+  content?: string;
+  conversation_id?: number;
+  sources?: AiSource[];
+  detail?: string;
 }

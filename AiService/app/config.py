@@ -20,6 +20,26 @@ class Settings(BaseSettings):
     # Nombre de chunks récupérés pour répondre à une question
     retrieval_top_k: int = 4
 
+    # Seuil de distance (L2, ChromaDB) au-delà duquel un chunk est
+    # considéré comme non pertinent et exclu du contexte envoyé au LLM.
+    # Plus la valeur est BASSE, plus le filtre est STRICT (moins de faux
+    # positifs mais risque d'exclure des sources valides) ; plus elle est
+    # HAUTE, plus on est permissif. À ajuster selon les retours réels :
+    # si des sources hors-sujet apparaissent encore, baisser cette valeur ;
+    # si des questions pertinentes se retrouvent sans réponse, l'augmenter.
+    retrieval_max_distance: float = 1.1
+
+    # JWT — mêmes valeurs que AuthService/DocumentService (voir docker-compose)
+    # pour pouvoir valider les tokens émis par AuthService et en extraire
+    # l'identifiant de l'utilisateur (claim NameIdentifier).
+    jwt_key: str = "CVT_Auth_Service_Super_Secret_Key_2026_Change_This_To_A_Long_Random_Value"
+    jwt_issuer: str = "CVTAuthService"
+    jwt_audience: str = "CVTAdministration"
+
+    # Base SQLite locale (fichier persisté via volume Docker) stockant les
+    # conversations et messages de l'assistant IA, par utilisateur.
+    chat_history_db_path: str = "/data/history/chat_history.db"
+
     class Config:
         env_prefix = "AI_"
 

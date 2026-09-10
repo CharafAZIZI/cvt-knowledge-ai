@@ -101,6 +101,36 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKeys": [ "Bearer" ]
       }
+    },
+    {
+      "UpstreamPathTemplate": "/api/ai/conversations",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/conversations",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ai-service",
+          "Port": 8000
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "Bearer" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/ai/conversations/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "DownstreamPathTemplate": "/conversations/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ai-service",
+          "Port": 8000
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKeys": [ "Bearer" ]
+      }
     }
   ],
   "GlobalConfiguration": {
