@@ -151,4 +151,15 @@ def delete_conversation(conversation_id: int) -> None:
         _conn.commit()
 
 
+def delete_all_conversations(user_id: str) -> int:
+    """Supprime toutes les conversations d'un utilisateur (et leurs messages,
+    via ON DELETE CASCADE). Retourne le nombre de conversations supprimées."""
+    with _lock:
+        cursor = _conn.execute(
+            "DELETE FROM conversations WHERE user_id = ?", (user_id,)
+        )
+        _conn.commit()
+        return cursor.rowcount
+
+
 init_db()

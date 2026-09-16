@@ -26,6 +26,10 @@ export class AiService {
     return this.http.delete<void>(`${this.baseUrl}/conversations/${id}`);
   }
 
+  deleteAllConversations(): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/conversations`);
+  }
+
   /**
    * Envoie une question et reçoit la réponse en streaming (SSE), token par
    * token. On utilise `fetch` plutôt que `HttpClient` : HttpClient n'expose

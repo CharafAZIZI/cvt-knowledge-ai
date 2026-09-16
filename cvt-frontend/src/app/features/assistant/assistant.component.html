@@ -1,7 +1,7 @@
 <div class="flex h-[calc(100vh-8rem)] md:h-[calc(100vh-7rem)] gap-4">
   <!-- Sidebar : historique des conversations -->
   <aside class="hidden md:flex w-64 shrink-0 flex-col bg-white border border-ink-200 rounded-xl overflow-hidden">
-    <div class="p-3 border-b border-ink-200">
+    <div class="p-3 border-b border-ink-200 space-y-2">
       <button
         type="button"
         (click)="startNewConversation()"
@@ -10,6 +10,17 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nouvelle conversation
       </button>
+
+      @if (conversations().length > 0) {
+        <button
+          type="button"
+          (click)="askDeleteAllConfirmation()"
+          class="w-full flex items-center justify-center gap-1.5 rounded-lg border border-ink-200 text-ink-500 text-xs font-medium px-3 py-1.5 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Tout supprimer
+        </button>
+      }
     </div>
 
     <div class="flex-1 overflow-y-auto p-2 space-y-1">
@@ -32,7 +43,7 @@
           <span class="flex-1 truncate">{{ conversation.title }}</span>
           <button
             type="button"
-            (click)="deleteConversation(conversation, $event)"
+            (click)="askDeleteConfirmation(conversation, $event)"
             class="shrink-0 opacity-0 group-hover:opacity-100 text-ink-400 hover:text-red-600 transition"
             aria-label="Supprimer la conversation"
           >
@@ -134,3 +145,27 @@
     </div>
   </div>
 </div>
+
+@if (conversationPendingDeletion(); as conversation) {
+  <app-confirm-modal
+    title="Supprimer la conversation"
+    [message]="'Voulez-vous vraiment supprimer « ' + conversation.title + ' » ? Cette action est irréversible.'"
+    confirmLabel="Supprimer"
+    tone="danger"
+    [isProcessing]="isDeleting()"
+    (confirmed)="confirmDeletion()"
+    (cancelled)="cancelDeletion()"
+  />
+}
+
+@if (isDeleteAllConfirmOpen()) {
+  <app-confirm-modal
+    title="Supprimer toutes les conversations"
+    message="Voulez-vous vraiment supprimer tout l'historique de conversations avec l'assistant IA ? Cette action est irréversible."
+    confirmLabel="Tout supprimer"
+    tone="danger"
+    [isProcessing]="isDeleting()"
+    (confirmed)="confirmDeleteAll()"
+    (cancelled)="cancelDeleteAll()"
+  />
+}

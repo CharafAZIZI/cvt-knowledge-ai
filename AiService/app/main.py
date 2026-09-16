@@ -115,6 +115,13 @@ async def remove_conversation(
     return {"message": "Conversation supprimée."}
 
 
+@app.delete("/conversations")
+async def remove_all_conversations(user_id: str = Depends(get_current_user_id)):
+    """Supprime toutes les conversations de l'utilisateur courant."""
+    deleted_count = history_store.delete_all_conversations(user_id)
+    return {"message": "Toutes les conversations ont été supprimées.", "deleted_count": deleted_count}
+
+
 # ============================================================
 # QUESTION / RÉPONSE (RAG) — en streaming (SSE)
 # ============================================================

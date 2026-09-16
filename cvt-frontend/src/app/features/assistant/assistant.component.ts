@@ -11,17 +11,21 @@ import {
 import { FormsModule } from '@angular/forms';
 import { AiService } from '../../core/services/ai.service';
 import { AskStreamEvent, ChatMessage, ConversationSummary } from '../../core/models/ai.model';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { ToastService } from '../../core/services/toast.service';
+import { extractErrorMessage } from '../../core/utils/http-error.util';
 
 const GENERIC_ERROR = "L'assistant est momentanément indisponible. Réessayez dans un instant.";
 
 @Component({
   selector: 'app-assistant',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmModalComponent],
   templateUrl: './assistant.component.html',
 })
 export class AssistantComponent implements OnInit, AfterViewChecked {
   private readonly aiService = inject(AiService);
+  private readonly toastService = inject(ToastService);
 
   @ViewChild('scrollAnchor') private scrollAnchor?: ElementRef<HTMLDivElement>;
 
@@ -31,6 +35,11 @@ export class AssistantComponent implements OnInit, AfterViewChecked {
   readonly isLoadingConversations = signal(false);
   readonly isLoadingConversation = signal(false);
   readonly isWaitingForAnswer = signal(false);
+
+  // Suppression (avec confirmation) d'une conversation ou de tout l'historique
+  readonly conversationPendingDeletion = signal<ConversationSummary | null>(null);
+  readonly isDeleteAllConfirmOpen = signal(false);
+  readonly isDeleting = signal(false);
 
   questionInput = '';
 
@@ -94,15 +103,65 @@ export class AssistantComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  deleteConversation(conversation: ConversationSummary, event: Event): void {
+  askDeleteConfirmation(conversation: ConversationSummary, event: Event): void {
     event.stopPropagation();
+    this.conversationPendingDeletion.set(conversation);
+  }
+
+  cancelDeletion(): void {
+    this.conversationPendingDeletion.set(null);
+  }
+
+  confirmDeletion(): void {
+    const conversation = this.conversationPendingDeletion();
+    if (!conversation) {
+      return;
+    }
+
+    this.isDeleting.set(true);
 
     this.aiService.deleteConversation(conversation.id).subscribe({
       next: () => {
+        this.isDeleting.set(false);
+        this.conversationPendingDeletion.set(null);
         this.conversations.update((list) => list.filter((c) => c.id !== conversation.id));
         if (this.activeConversationId() === conversation.id) {
           this.startNewConversation();
         }
+        this.toastService.success('Conversation supprimée.');
+      },
+      error: (error) => {
+        this.isDeleting.set(false);
+        this.toastService.error(extractErrorMessage(error, 'La suppression a échoué.'));
+      },
+    });
+  }
+
+  askDeleteAllConfirmation(): void {
+    if (this.conversations().length === 0) {
+      return;
+    }
+    this.isDeleteAllConfirmOpen.set(true);
+  }
+
+  cancelDeleteAll(): void {
+    this.isDeleteAllConfirmOpen.set(false);
+  }
+
+  confirmDeleteAll(): void {
+    this.isDeleting.set(true);
+
+    this.aiService.deleteAllConversations().subscribe({
+      next: () => {
+        this.isDeleting.set(false);
+        this.isDeleteAllConfirmOpen.set(false);
+        this.conversations.set([]);
+        this.startNewConversation();
+        this.toastService.success('Toutes les conversations ont été supprimées.');
+      },
+      error: (error) => {
+        this.isDeleting.set(false);
+        this.toastService.error(extractErrorMessage(error, 'La suppression a échoué.'));
       },
     });
   }
