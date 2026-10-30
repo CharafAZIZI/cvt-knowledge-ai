@@ -1,0 +1,82 @@
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# .NET build
+bin/
+obj/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# Logs
+*.log
+logs/
+
+# Test results
+TestResults/
+*.trx
+
+# Local configuration
+appsettings.Development.json
+appsettings.Local.json
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# User secrets
+secrets.json
+
+# Local databases
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.sqlite
+*.sqlite3
+
+# Publish
+publish/
+Publish/
+artifacts/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# User-specific project files
+*.csproj.user
+*.fsproj.user
+*.vbproj.user
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Certificates
+*.pfx
+*.p12
