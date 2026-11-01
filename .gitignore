@@ -1,4 +1,23 @@
 # =========================
+# Secrets / clés (NE JAMAIS VERSIONNER)
+# =========================
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.ppk
+id_rsa*
+secrets/
+**/appsettings.Production.json
+**/appsettings.*.local.json
+
+# =========================
 # Visual Studio
 # =========================
 .vs/
@@ -9,6 +28,7 @@
 # =========================
 **/bin/
 **/obj/
+**/publish/
 
 # =========================
 # Visual Studio user files
@@ -26,6 +46,31 @@ _ReSharper*/
 *.DotSettings.user
 
 # =========================
+# Frontend (cvt-frontend)
+# =========================
+**/node_modules/
+**/dist/
+**/.angular/
+npm-debug.log*
+
+# =========================
+# Python (AiService)
+# =========================
+**/__pycache__/
+*.pyc
+**/.venv/
+**/venv/
+
+# =========================
+# Données locales (volumes, bases, vecteurs)
+# =========================
+/data/
+**/chroma/
+*.db
+*.sqlite
+*.bak
+
+# =========================
 # Logs
 # =========================
 *.log
@@ -35,3 +80,8 @@ _ReSharper*/
 # =========================
 .DS_Store
 Thumbs.db
+
+# =========================
+# VS Code
+# =========================
+.vscode/

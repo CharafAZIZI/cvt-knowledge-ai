@@ -1,185 +1,151 @@
-services:
+# Les secrets proviennent du fichier .env (voir .env.example).
+# "${VAR:?msg}" fait échouer le démarrage si la variable est absente.
 
+services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: cvt-sqlserver
-
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "YourStrongPassword123!"
-
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD manquant dans .env}"
     ports:
-      - "1433:1433"
-
+      - "127.0.0.1:1433:1433"   # accessible uniquement depuis la machine hôte
     volumes:
       - sqlserver_data:/var/opt/mssql
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   auth-service:
     build:
       context: ./AuthService/AuthService
       dockerfile: Dockerfile
-
     container_name: cvt-auth-service
-
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Production}"
       ASPNETCORE_URLS: http://+:8080
-
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=CVTAuthDB;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;"
-
-      Jwt__Key: "CVT_Auth_Service_Super_Secret_Key_2026_Change_This_To_A_Long_Random_Value"
-      Jwt__Issuer: "CVTAuthService"
-      Jwt__Audience: "CVTAdministration"
-      Jwt__ExpirationMinutes: "120"
-
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=CVTAuthDB;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+      Jwt__Key: "${JWT_KEY:?JWT_KEY manquant dans .env}"
+      Jwt__Issuer: "${JWT_ISSUER:-CVTAuthService}"
+      Jwt__Audience: "${JWT_AUDIENCE:-CVTAdministration}"
+      Jwt__ExpirationMinutes: "${JWT_EXPIRATION_MINUTES:-120}"
     ports:
-      - "5280:8080"
-
+      - "127.0.0.1:5280:8080"   # service interne : joint via la gateway
     depends_on:
       - sqlserver
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   minio:
-    image: minio/minio:latest
+    image: minio/minio:latest   # TODO : épingler une version (ex. RELEASE.xxxx)
     container_name: cvt-minio
-
     environment:
-      MINIO_ROOT_USER: "cvtadmin"
-      MINIO_ROOT_PASSWORD: "CvtMinioPassword123!"
-
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER:?MINIO_ROOT_USER manquant dans .env}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD manquant dans .env}"
     command: server /data --console-address ":9001"
-
     ports:
-      - "9000:9000"   # API S3
-      - "9001:9001"   # Console web (login avec MINIO_ROOT_USER / MINIO_ROOT_PASSWORD)
-
+      - "127.0.0.1:9000:9000"   # API S3 (local uniquement)
+      - "127.0.0.1:9001:9001"   # Console web (local uniquement)
     volumes:
       - minio_data:/data
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama:latest   # TODO : épingler une version
     container_name: cvt-ollama
-
     ports:
-      - "11434:11434"
-
+      - "127.0.0.1:11434:11434"   # l'API Ollama n'a aucune authentification
     volumes:
       - ollama_data:/root/.ollama
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   ai-service:
     build:
       context: ./AiService
       dockerfile: Dockerfile
-
     container_name: cvt-ai-service
-
     environment:
       AI_OLLAMA_BASE_URL: "http://ollama:11434"
-      AI_OLLAMA_MODEL: "llama3.2:3b"
+      AI_OLLAMA_MODEL: "${AI_OLLAMA_MODEL:-llama3.2:3b}"
       AI_CHROMA_PERSIST_DIR: "/data/chroma"
-
     volumes:
       - chroma_data:/data/chroma
       - ai_model_cache:/root/.cache
       - ai_history_data:/data/history
-
     ports:
-      - "5100:8000"
-
+      - "127.0.0.1:5100:8000"
     depends_on:
       - ollama
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   document-service:
     build:
       context: ./DocumentService/DocumentService
       dockerfile: Dockerfile
-
     container_name: cvt-document-service
-
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Production}"
       ASPNETCORE_URLS: http://+:8080
-
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=DocumentDB;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;"
-
-      Jwt__Key: "CVT_Auth_Service_Super_Secret_Key_2026_Change_This_To_A_Long_Random_Value"
-      Jwt__Issuer: "CVTAuthService"
-      Jwt__Audience: "CVTAdministration"
-
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=DocumentDB;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+      Jwt__Key: "${JWT_KEY:?JWT_KEY manquant dans .env}"
+      Jwt__Issuer: "${JWT_ISSUER:-CVTAuthService}"
+      Jwt__Audience: "${JWT_AUDIENCE:-CVTAdministration}"
       Minio__Endpoint: "minio:9000"
-      Minio__AccessKey: "cvtadmin"
-      Minio__SecretKey: "CvtMinioPassword123!"
-      Minio__BucketName: "cvt-documents"
+      Minio__AccessKey: "${MINIO_ROOT_USER}"
+      Minio__SecretKey: "${MINIO_ROOT_PASSWORD}"
+      Minio__BucketName: "${MINIO_BUCKET:-cvt-documents}"
       Minio__UseSSL: "false"
       Minio__TimeoutSeconds: "60"
-
       AiService__BaseUrl: "http://ai-service:8000"
-
     ports:
-      - "5000:8080"
-
+      - "127.0.0.1:5000:8080"
     depends_on:
       - sqlserver
       - minio
       - ai-service
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   api-gateway:
     build:
       context: ./ApiGateway/ApiGateway
       dockerfile: Dockerfile
-
     container_name: cvt-api-gateway
-
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Production}"
       ASPNETCORE_URLS: http://+:8080
-
     ports:
-      - "8080:8080"
-
+      - "8080:8080"             # seul point d'entrée API exposé
     depends_on:
       - auth-service
       - document-service
       - ai-service
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
-
 
   frontend:
     build:
       context: ./cvt-frontend
       dockerfile: Dockerfile
-
     container_name: cvt-frontend
-
     ports:
       - "4200:80"
-
     depends_on:
       - api-gateway
-
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
 
-
 volumes:
-
   sqlserver_data:
   minio_data:
   ollama_data:

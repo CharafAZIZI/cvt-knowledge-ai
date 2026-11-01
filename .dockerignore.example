@@ -1,0 +1,13 @@
+# À copier dans CHAQUE dossier de service (AuthService/AuthService, DocumentService/DocumentService,
+# ApiGateway/ApiGateway, AiService, cvt-frontend) en tant que ".dockerignore"
+.env
+.env.*
+*.pem
+*.key
+.git
+.gitignore
+bin/
+obj/
+node_modules/
+__pycache__/
+*.log
